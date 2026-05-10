@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Technical Writer's Edge — Job Search Coach</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --navy: #0f1f3d;
+    --blue: #2d4a7a;
+    --accent: #e8a020;
+    --light-blue: #eef2f8;
+    --text: #1e2a3a;
+    --muted: #6b7a8f;
+    --white: #ffffff;
+    --border: #d4dce8;
+    --success: #2a7a4a;
+    --surface: #f7f9fc;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  header {
+    background: var(--navy);
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .header-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--accent);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .header-text h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .header-text p {
+    font-size: 13px;
+    color: #8fa3bf;
+    margin-top: 2px;
+  }
+
+  .badge {
+    margin-left: auto;
+    background: rgba(232,160,32,0.15);
+    border: 1px solid rgba(232,160,32,0.4);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 36px 24px 60px;
+  }
+
+  .intro-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 32px;
+  }
+
+  .intro-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .intro-card strong {
+    color: var(--text);
+  }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    background: transparent;
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab.active {
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .tab:hover:not(.active) {
+    background: var(--light-blue);
+    color: var(--blue);
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 7px;
+    letter-spacing: 0.2px;
+  }
+
+  label span {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 12px;
+    margin-left: 6px;
+  }
+
+  textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    color: var(--text);
+    background: var(--white);
+    resize: vertical;
+    transition: border-color 0.2s;
+    line-height: 1.6;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(45,74,122,0.08);
+  }
+
+  textarea::placeholder { color: #b0bac8; }
+
+  .focus-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .focus-option {
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--white);
+  }
+
+  .focus-option:hover {
+    border-color: var(--blue);
+    background: var(--light-blue);
+  }
+
+  .focus-option.selected {
+    border-color: var(--blue);
+    background: var(--light-blue);
+  }
+
+  .focus-option input { display: none; }
+
+  .focus-option .fo-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .focus-option .fo-desc {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+    letter-spacing: 0.2px;
+  }
+
+  .submit-btn:hover:not(:disabled) {
+    background: var(--blue);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(15,31,61,0.2);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .response-area {
+    margin-top: 28px;
+    display: none;
+  }
+
+  .response-area.visible { display: block; }
+
+  .response-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .response-header h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--navy);
+  }
+
+  .response-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 12px;
+    background: rgba(45,74,122,0.1);
+    color: var(--blue);
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+
+  .response-box {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text);
+    white-space: pre-wrap;
+    min-height: 100px;
+  }
+
+  .response-box.loading {
+    color: var(--muted);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .spinner {
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid var(--border);
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .response-box b, .response-box strong { color: var(--navy); }
+
+  .copy-btn {
+    margin-top: 12px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .copy-btn:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+    background: var(--light-blue);
+  }
+
+  /* Quick Tips panel */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .tip-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    border-top: 3px solid var(--blue);
+  }
+
+  .tip-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .tip-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .tip-card ul li {
+    font-size: 12.5px;
+    color: var(--muted);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--surface);
+    line-height: 1.5;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+
+  .tip-card ul li:hover { color: var(--blue); }
+  .tip-card ul li:last-child { border-bottom: none; }
+
+  .tip-card ul li::before {
+    content: "→ ";
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* Prompts panel */
+  .prompt-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .prompt-card:hover {
+    border-color: var(--blue);
+    box-shadow: 0 2px 10px rgba(45,74,122,0.08);
+  }
+
+  .prompt-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .prompt-card p {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .prompt-card .use-btn {
+    margin-top: 10px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--blue);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .error-box {
+    background: #fff5f5;
+    border: 1px solid #fcc;
+    border-radius: 8px;
+    padding: 14px 18px;
+    color: #c0392b;
+    font-size: 13px;
+    margin-top: 12px;
+    display: none;
+  }
+
+  .error-box.visible { display: block; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+  }
+
+  footer a { color: var(--blue); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .focus-selector, .tips-grid { grid-template-columns: 1fr; }
+    header { padding: 20px; }
+    .badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">✍️</div>
+  <div class="header-text">
+    <h1>The Technical Writer's Edge</h1>
+    <p>AI-powered job search coach for technical writers</p>
+  </div>
+  <div class="badge">Powered by Claude</div>
+</header>
+
+<main>
+  <div class="intro-card">
+    <p>
+      This coach is built on tips from the <strong>Write the Docs #career-advice community</strong> — real technical writers sharing hard-won experience.
+      Paste your resume and a job description to get tailored, actionable guidance. Or explore quick tips and ready-to-use prompts below.
+    </p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('coach')">🎯 Job Search Coach</button>
+    <button class="tab" onclick="switchTab('tips')">💡 Quick Tips</button>
+    <button class="tab" onclick="switchTab('prompts')">📋 Prompt Library</button>
+  </div>
+
+  <!-- COACH PANEL -->
+  <div class="panel active" id="panel-coach">
+    <div class="form-group">
+      <label>Your Resume <span>paste the full text</span></label>
+      <textarea id="resume" rows="8" placeholder="Paste your resume here — work experience, skills, domains you've documented, tools you've used..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Job Description <span>paste the full posting</span></label>
+      <textarea id="jobdesc" rows="7" placeholder="Paste the job description you're targeting..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>What would you like help with? <span>select one or more</span></label>
+      <div class="focus-selector" id="focusSelector">
+        <label class="focus-option selected">
+          <input type="checkbox" value="profile" checked>
+          <div class="fo-title">📄 Profile & LinkedIn</div>
+          <div class="fo-desc">How to position your experience for this role</div>
+        </label>
+        <label class="focus-option">
+          <input type="checkbox" value="domain">
+          <div class="fo-title">🏗 Domain Expertise</div>
+          <div class="fo-desc">Surface your subject matter knowledge effectively</div>
+        </label>
+        <label class="focus-option">
+          <input type="checkbox" value="interview">
+          <div class="fo-title">🎤 Interview Prep</div>
+          <div class="fo-desc">STAR stories and questions to prepare for</div>
+        </label>
+        <label class="focus-option">
+          <input type="checkbox" value="ai">
+          <div class="fo-title">🤖 AI Fluency</div>
+          <div class="fo-desc">How to talk about AI skills in this context</div>
+        </label>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="getAdvice()">Get Personalised Advice →</button>
+
+    <div class="error-box" id="errorBox"></div>
+
+    <div class="response-area" id="responseArea">
+      <div class="response-header">
+        <h3>Your Job Search Advice</h3>
+        <span class="response-tag" id="responseTag">Coach</span>
+      </div>
+      <div class="response-box" id="responseBox"></div>
+      <button class="copy-btn" onclick="copyResponse()">📋 Copy to clipboard</button>
+    </div>
+  </div>
+
+  <!-- TIPS PANEL -->
+  <div class="panel" id="panel-tips">
+    <div class="section-label">Key principles from the Write the Docs community</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <h4>📄 Your Job Profile</h4>
+        <ul>
+          <li>Rewrite LinkedIn headline with an LLM</li>
+          <li>Keep resume and LinkedIn consistent</li>
+          <li>Build a GitHub Pages portfolio</li>
+          <li>Blog posts get noticed by interviewers</li>
+          <li>Contribute to open source docs</li>
+        </ul>
+      </div>
+      <div class="tip-card">
+        <h4>🏗 Domain Expertise</h4>
+        <ul>
+          <li>Create a dedicated "Domain Expertise" section</li>
+          <li>Name specific technologies, not just areas</li>
+          <li>Describe how you learned each domain</li>
+          <li>Lead with the domain matching each role</li>
+          <li>SME interviewing is a core skill — say so</li>
+        </ul>
+      </div>
+      <div class="tip-card">
+        <h4>🤖 AI Fluency</h4>
+        <ul>
+          <li>Have concrete AI examples ready</li>
+          <li>Prompt engineering = documentation skill</li>
+          <li>Use Claude Code to build your portfolio</li>
+          <li>Take a prompt engineering course</li>
+          <li>Frame AI concerns as things you work within</li>
+        </ul>
+      </div>
+      <div class="tip-card">
+        <h4>🎤 Interviews</h4>
+        <ul>
+          <li>Build a Q&A doc and review it repeatedly</li>
+          <li>Prepare a bank of distinct STAR stories</li>
+          <li>Feed the job desc to an LLM for prep</li>
+          <li>It's fine to admit no direct STAR example</li>
+          <li>Bad interviewers tell you about culture</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMPTS PANEL -->
+  <div class="panel" id="panel-prompts">
+    <div class="section-label">Copy these prompts into Claude, ChatGPT, or Gemini</div>
+
+    <div class="prompt-card" onclick="copyPrompt(this)">
+      <h4>Rewrite my LinkedIn headline</h4>
+      <p>Rewrite my LinkedIn headline for a senior technical writer role specialising in [DOMAIN]. My background: [PASTE RESUME SUMMARY]. Make it optimised for recruiter searches and immediately clear to a hiring manager. Give me 3 options.</p>
+      <span class="use-btn">Copy prompt ↗</span>
+    </div>
+
+    <div class="prompt-card" onclick="copyPrompt(this)">
+      <h4>Tailor my resume for a job posting</h4>
+      <p>Here is my resume: [PASTE RESUME]. Here is the job description: [PASTE JOB DESCRIPTION]. Rewrite my resume to closely match the language and priorities of this role. Flag any gaps and suggest how to address them.</p>
+      <span class="use-btn">Copy prompt ↗</span>
+    </div>
+
+    <div class="prompt-card" onclick="copyPrompt(this)">
+      <h4>Generate STAR interview stories</h4>
+      <p>Based on this resume: [PASTE RESUME], generate 5 strong STAR-format stories (Situation, Task, Action, Result) I could use in a technical writing interview. Focus on: learning complex domains quickly, working with SMEs, handling tight deadlines, and demonstrating AI tool usage.</p>
+      <span class="use-btn">Copy prompt ↗</span>
+    </div>
+
+    <div class="prompt-card" onclick="copyPrompt(this)">
+      <h4>Write my Domain Expertise section</h4>
+      <p>Based on my resume: [PASTE RESUME], write a "Domain Expertise" section for my resume and LinkedIn profile. List my domains with specific technologies named. Keep it scannable and optimised for ATS keyword matching. Mirror the language used in this job posting: [PASTE JOB POSTING].</p>
+      <span class="use-btn">Copy prompt ↗</span>
+    </div>
+
+    <div class="prompt-card" onclick="copyPrompt(this)">
+      <h4>Prepare me for an interview</h4>
+      <p>I have an interview for this role: [PASTE JOB DESCRIPTION]. My background: [PASTE RESUME SUMMARY]. Generate the 10 most likely interview questions, suggest strong answers based on my experience, and help me prepare for questions about AI tool usage. Also flag any likely concerns they may have about my application.</p>
+      <span class="use-btn">Copy prompt ↗</span>
+    </div>
+
+    <div class="prompt-card" onclick="copyPrompt(this)">
+      <h4>Write a tailored cover letter</h4>
+      <p>Write a concise, confident cover letter for this role: [PASTE JOB DESCRIPTION]. My resume: [PASTE RESUME]. Lead with my most relevant domain expertise. Include a specific example of how I've used AI tools in my work. Keep it under 300 words and avoid clichés.</p>
+      <span class="use-btn">Copy prompt ↗</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Built from community wisdom in <a href="https://www.writethedocs.org/slack/" target="_blank">Write the Docs #career-advice</a> ·
+  <a href="https://github.com/YOUR-USERNAME/tw-job-search-guide" target="_blank">View on GitHub</a> ·
+  Version 1.0
+</footer>
+
+<script>
+  const GUIDE_CONTEXT = `
+You are a job search coach for technical writers, specialising in helping them find roles in the age of AI and LLMs. 
+You give direct, practical, specific advice. You don't use clichés or vague encouragement.
+
+Your advice is grounded in these principles from the Write the Docs community:
+
+PROFILE & LINKEDIN:
+- LinkedIn is the primary storefront. Rewrite headline, About, and role descriptions using LLMs.
+- Keep resume and LinkedIn consistent — don't be two different people.
+- Build a GitHub Pages portfolio. Blog posts get noticed by interviewers.
+- Stay active on LinkedIn — comment on posts, especially hiring managers' posts.
+- Get and give LinkedIn recommendations.
+
+TAILORING APPLICATIONS:
+- Export resume as Markdown, paste with job description into an LLM for tailored applications.
+- Mirror exact language from job postings for ATS keyword matching.
+- Set up LinkedIn job alerts for 5 target titles, filtered to last 24 hours.
+
+DOMAIN EXPERTISE (this is critical):
+- Technical writers have a rare skill: rapidly and deeply learning any subject matter.
+- This is a core professional competency, not a soft skill.
+- Create a dedicated "Domain Expertise" or "Technical Specializations" section.
+- List specific technologies and platforms, not vague areas.
+- Show depth: "Documented Kubernetes cluster administration for platform engineering teams" not just "cloud infrastructure".
+- Describe the learning method: SME interviews, hands-on product use, engineering spec review.
+- Lead with the domain matching each specific role.
+- For resume: use "Domain Expertise" or "Subject Matter Expertise".
+- For LinkedIn: use "Industry & Technology Expertise" or "Technical Specializations" for better algorithm reach.
+
+AI FLUENCY:
+- Have concrete examples of AI tool usage ready.
+- Prompt engineering is a documentation problem — technical writers are naturally positioned for it.
+- Practical skills: prompt engineering, Claude Code, LLMs for drafting/editing.
+- Frame AI concerns as things you work within, not reasons to avoid it.
+
+INTERVIEW SKILLS:
+- Build a question-and-answer document and review it repeatedly.
+- Prepare a bank of distinct STAR stories (Situation, Task, Action, Result).
+- Use LLMs to prep: feed job description and get likely questions and answer angles.
+- It's fine to admit when you don't have a direct STAR example — explain how you'd approach it.
+
+JOB TITLES:
+- Use searchable titles, not internal company titles.
+- Search under multiple titles: Technical Writer, Documentation Engineer, Information Architect, Context Engineer, DevEx Writer.
+- Don't hide your technical writing identity trying to sound newer.
+
+Be specific. Reference the person's actual resume and job description in your advice. Give actionable next steps.
+`;
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', ['coach','tips','prompts'][i] === tab);
+    });
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + tab).classList.add('active');
+  }
+
+  document.querySelectorAll('.focus-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const cb = opt.querySelector('input');
+      cb.checked = !cb.checked;
+      opt.classList.toggle('selected', cb.checked);
+    });
+  });
+
+  function getSelectedFocus() {
+    const selected = [];
+    document.querySelectorAll('.focus-option input:checked').forEach(cb => {
+      const labels = { profile: 'Profile & LinkedIn positioning', domain: 'Domain expertise visibility', interview: 'Interview preparation', ai: 'AI fluency messaging' };
+      selected.push(labels[cb.value]);
+    });
+    return selected.length ? selected.join(', ') : 'general job search advice';
+  }
+
+  async function getAdvice() {
+    const resume = document.getElementById('resume').value.trim();
+    const jobdesc = document.getElementById('jobdesc').value.trim();
+    const focus = getSelectedFocus();
+    const btn = document.getElementById('submitBtn');
+    const responseArea = document.getElementById('responseArea');
+    const responseBox = document.getElementById('responseBox');
+    const errorBox = document.getElementById('errorBox');
+    const responseTag = document.getElementById('responseTag');
+
+    if (!resume && !jobdesc) {
+      errorBox.textContent = 'Please paste at least your resume or a job description to get started.';
+      errorBox.classList.add('visible');
+      return;
+    }
+
+    errorBox.classList.remove('visible');
+    btn.disabled = true;
+    btn.textContent = 'Analysing...';
+    responseArea.classList.add('visible');
+    responseBox.className = 'response-box loading';
+    responseBox.innerHTML = '<div class="spinner"></div> Reviewing your materials and generating advice...';
+    responseTag.textContent = focus.split(',')[0];
+
+    const userMessage = `
+${resume ? `MY RESUME:\n${resume}\n\n` : ''}${jobdesc ? `JOB DESCRIPTION I'M APPLYING FOR:\n${jobdesc}\n\n` : ''}FOCUS AREAS: ${focus}
+
+Please give me specific, actionable advice based on the guide principles. Structure your response clearly with sections. Be direct and concrete — reference my actual background and this specific role where possible.
+    `.trim();
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system: GUIDE_CONTEXT,
+          messages: [{ role: 'user', content: userMessage }]
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.error) throw new Error(data.error.message);
+
+      const text = data.content.map(b => b.text || '').join('');
+      responseBox.className = 'response-box';
+      responseBox.textContent = text;
+
+    } catch (err) {
+      responseBox.className = 'response-box';
+      responseBox.textContent = '';
+      errorBox.textContent = 'Something went wrong: ' + (err.message || 'Unknown error. Please try again.');
+      errorBox.classList.add('visible');
+      responseArea.classList.remove('visible');
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Get Personalised Advice →';
+  }
+
+  function copyResponse() {
+    const text = document.getElementById('responseBox').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => btn.textContent = '📋 Copy to clipboard', 2000);
+    });
+  }
+
+  function copyPrompt(card) {
+    const text = card.querySelector('p').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = card.querySelector('.use-btn');
+      const original = btn.textContent;
+      btn.textContent = '✓ Copied to clipboard';
+      setTimeout(() => btn.textContent = original, 2000);
+    });
+  }
+</script>
+</body>
+</html>

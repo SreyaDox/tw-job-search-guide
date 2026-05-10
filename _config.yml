@@ -1,0 +1,16 @@
+title: The Technical Writer's Edge
+description: A job search guide for technical writers in the age of AI — community-driven, practical, and free.
+theme: minima
+url: "https://YOUR-USERNAME.github.io"
+baseurl: "/tw-job-search-guide"
+
+# Navigation
+header_pages:
+  - docs/guide.md
+
+# Show author and date
+show_excerpts: true
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
